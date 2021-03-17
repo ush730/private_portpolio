@@ -414,7 +414,7 @@ function test() {
 							<li id="portfolio3_submenu" onclick="clickMenu('portfolio3', 'Q&A', '/portfolio/qna/index.do', false)">Q&A</li>
 							<li id="portfolio4_submenu" onclick="clickMenu('portfolio4', '답변게시판', '/portfolio/reply/index.do', false)">답변게시판</li>
 							<li id="portfolio5_submenu" onclick="clickMenu('portfolio5', '댓글게시판', '/portfolio/comment/index.do', false)">댓글게시판</li>
-							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</li>
+							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/user/index.do', false)">회원관리</li>
 							<li id="portfolio7_submenu" onclick="clickMenu('portfolio7', '전처리시각화실습', '/python/math.html', false)">전처리시각화실습</a></dd>
 						</ul>
 					</dd>
