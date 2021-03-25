@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gallery">
+
+	<select id="count" parameterType="gallery.GalleryVo" resultType="int">
+		select count(*) as cnt from dog
+	</select>
+	
+	<select id="selectList" parameterType="gallery.GalleryVo" resultType="gallery.GalleryVo">
+		select * from dog
+		ORDER BY regdate desc
+	</select>
+	
+	<select id="selectOne" parameterType="gallery.GalleryVo" resultType="gallery.GalleryVo">
+		select * from dog where no=${no}
+	</select>
+	
+	<insert id="insert" parameterType="gallery.GalleryVo">
+		INSERT INTO dog (
+			kind, color, regdate, image
+		) VALUES (
+			#{kind},
+			#{color},
+			NOW(),
+			#{image}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="gallery.GalleryVo">
+		DELETE FROM gallery WHERE no = #{no}
+	</delete>
+	
+	
+	<update id="update" parameterType="gallery.GalleryVo">
+		UPDATE dog SET
+			kind = #{kind}
+			, color = #{color}
+			<if test="image != null">
+			, image=#{image}
+			</if>
+		WHERE
+			no = #{no}
+	</update>
+	
+	<update id="updateReadcnt" parameterType ="int">
+		update dog set readcnt=readcnt+1 where no=#{no}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

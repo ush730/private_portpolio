@@ -10,6 +10,10 @@
 	<context:component-scan base-package="test" />
 	<context:component-scan base-package="main" />
 	<context:component-scan base-package="user" />
+	<context:component-scan base-package="board" />
+	<context:component-scan base-package="notice" />
+	<context:component-scan base-package="reply" />
+	<context:component-scan base-package="gallery" />
 	
 	<mvc:annotation-driven/> <!-- annotation 활성화 -->
  	<mvc:default-servlet-handler/>
@@ -43,17 +47,8 @@
 	
 
 	 	<!-- 사용자 정적페이지 annotation-driven 세텅해야함 -->
-	<mvc:view-controller path="/portfolio/notice/index.do"/>
-	<mvc:view-controller path="/portfolio/notice/view.do"/>
-	<mvc:view-controller path="/portfolio/notice/write.do"/>
-	<mvc:view-controller path="/portfolio/notice/edit.do"/>
+
 	
-	<mvc:view-controller path="/portfolio/reply/index.do"/>
-	<mvc:view-controller path="/portfolio/reply/view.do"/>
-	<mvc:view-controller path="/portfolio/reply/write.do"/>
-	<mvc:view-controller path="/portfolio/reply/edit.do"/>
-	
-	<mvc:view-controller path="/portfolio/user/write.do"/>
 
 	
 
@@ -61,12 +56,23 @@
 	<!-- 인터셉터 설정 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-	
-			<mvc:mapping path="/portfolio/user/insert.do"/>
+			
 			<mvc:mapping path="/portfolio/user/update.do"/>
 			<mvc:mapping path="/portfolio/user/delete.do"/>
+			<mvc:mapping path="/portfolio/user/edit.do"/>
+			<mvc:mapping path="/portfolio/user/detail.do"/>
+			<mvc:mapping path="/portfolio/user/idsearch.do"/>
+			<mvc:mapping path="/portfolio/user/pwdsearch.do"/>
+			<mvc:mapping path="/portfolio/board/*"/>
+
+			<mvc:mapping path="/portfolio/notice/*"/>
 			<mvc:exclude-mapping path="/portfolio/user/index.do"/>
-			<mvc:exclude-mapping path="/portfolio/user/edit.do"/>
+			<mvc:exclude-mapping path="/portfolio/board/index.do"/>
+			<mvc:exclude-mapping path="/portfolio/board/detail.do"/>
+			<mvc:exclude-mapping path="/portfolio/reply/detail.do"/>
+			<mvc:exclude-mapping path="/portfolio/reply/index.do"/>
+			<mvc:exclude-mapping path="/portfolio/notice/index.do"/>
+			<mvc:exclude-mapping path="/portfolio/notice/detail.do"/>
 			<bean class="interceptor.UserInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

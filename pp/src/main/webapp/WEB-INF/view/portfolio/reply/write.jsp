@@ -36,8 +36,8 @@ function goSave() {
 	<!--//pageTitle-->
 	<!--//search-->
 	<div class="write">
-		<form name="frm" id="frm" action="process.do" method="POST" enctype="multipart/form-data">
-		<input type="hidden" name="cmd" value="write">
+		<form name="frm" id="frm" action="insert.do" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="user_no" value="${authUser.user_no }">
 		<table>
 			<colgroup>
 				<col style="width:150px"/>
@@ -47,19 +47,13 @@ function goSave() {
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" id="title" name="title" value="" />
+						<input type="text" id="title" name="rep_title" value="" />
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea id="contents" name="contents" rows="25"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td>
-						<input type="file" name="filename_tmp">
+						<textarea id="contents" name="rep_content" rows="25"></textarea>
 					</td>
 				</tr>
 			</tbody>
@@ -67,6 +61,7 @@ function goSave() {
 		</form>
 		<div class="btnSet">
 			<div class="right">
+			<div class="fl_l"><a href="index.do" class="btn">목록으로</a></div>		
 				<a href="javascript:;" class="btn" onclick="goSave();">저장</a>
 			</div>
 		</div>

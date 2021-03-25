@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.stereotype.Controller;
 
+
+@Controller
 public class UserController {
 	
 
@@ -26,11 +29,6 @@ public class UserController {
 		
 		@GetMapping("/")
 		public String index(HttpSession sess) {
-			UserVo uv = new UserVo();
-			uv.setUser_no(104);
-			uv.setUser_name("test30");
-			uv.setUser_id("test30");
-			sess.setAttribute("authUser", uv);
 			return "redirect:portfolio/user/index.do";
 		}
 		
@@ -54,7 +52,7 @@ public class UserController {
 			req.setAttribute("vo", vo);
 			
 			// jsp 포워딩
-			return "portpolio/user/index";
+			return "portfolio/user/index";
 		}
 		
 		@RequestMapping("/portfolio/user/detail.do")
@@ -65,7 +63,7 @@ public class UserController {
 			req.setAttribute("vo", uv);
 			
 			// jsp 포워딩
-			return "user/detail";
+			return "portfolio/user/detail";
 		}
 		
 		@RequestMapping("/portfolio/user/mypage.do")
@@ -82,7 +80,7 @@ public class UserController {
 		@GetMapping("/portfolio/user/write.do")
 		public String write(HttpServletRequest req, HttpServletResponse res) {
 			
-			return "user/write";
+			return "portfolio/user/write";
 
 		}
 		@PostMapping("/portfolio/user/write.do")
@@ -94,7 +92,7 @@ public class UserController {
 				// 세션객체에 로그인정보 저장
 				sess.setAttribute("authUser", uv);
 			}
-			return "portfoliouser/index";
+			return "portfolio/user/index";
 			
 		}
 
@@ -135,7 +133,7 @@ public class UserController {
 		// 로그인폼
 		@GetMapping("/portfolio/user/login.do")
 		public String login() {
-			return "user/login";
+			return "portfolio/user/login";
 		}
 		
 		// 로그인처리

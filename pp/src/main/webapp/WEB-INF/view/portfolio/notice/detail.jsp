@@ -1,33 +1,48 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.*" %>
+<%@ page import="user.*" %>
+<%@ page import="java.util.*" %>
 <!doctype html>
 <html lang="ko">
 <head>
 <title><%=util.Property.title %></title>
 <%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
 <script>
-
-function goEdit() {
-	if (confirm("수정하시겠습니까?")) {
-		location.href = "edit.do?idx=1";
+function del() {	
+	
+	if (confirm('정말 삭제하시겠습니까?')) {
+		$.ajax({
+			url:'delete.do',
+			data:{notice_no:${vo.notice_no}},
+			type:'HTML',
+			method:'GET',
+			cache:false,
+			async:false,
+			success:function(res) {
+				//console.log(data);
+				if (res == 'true') {
+					alert('정상적으로 삭제되었습니다.');
+					location.href='index.do';
+				} else {
+					alert('삭제 오류');
+				}
+			}
+		});
 	}
-}
 
-function goDelete() {
-	if (confirm("삭제하시겠습니까?")) {
-		location.href = "process.do?cmd=delete&idx=1";
-	}
 }
 </script>
 </head>
 <body>
 <div id="boardWrap" class="bbs">
 	<div class="pageTitle">
-		<h2>답변게시판</h2>
+		<h2>공지사항</h2>
 	</div>
 	<!--//pageTitle-->
 	<!--//search-->
 	<div class="write">
-		<form name="frm" id="frm" action="process.do" method="POST" enctype="multipart/form-data">
+		<form name="frm" id="frm" action="process.do" method="POST" enctype="multipart/form-data"></form>
 		<input type="hidden" name="cmd" value="write">
 		<table>
 			<colgroup>
@@ -40,38 +55,23 @@ function goDelete() {
 				<tr>
 					<th>작성일</th>
 					<td>
-						2020-01-01
+						${vo.notice_regdate }
 					</td>
 					<th>조회수</th>
 					<td>
-						111
+						${vo.readCnt }
 					</td>
 				</tr>
 				<tr>
 					<th>제목</th>
 					<td>
-						답변게시판 제목입니다.
-					</td>
-					<th>작성자</th>
-					<td>
-						관리자
+						${vo.notice_title }
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td colspan="3">
-						내용입니다.<br>
-						내용입니다.<br>
-						내용입니다.<br>
-						내용입니다.<br>
-						내용입니다.<br>
-						내용입니다.<br>
-					</td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td colspan="3">
-						<a href="" target="_blank">첨부파일명.docx</a>
+						${vo.notice_contents }
 					</td>
 				</tr>
 			</tbody>
@@ -82,8 +82,8 @@ function goDelete() {
 				<a href="javascript:;" class="btn" onclick="location.href='index.do';">목록</a>
 			</div>
 			<div class="right">
-				<a href="javascript:;" class="btn" onclick="goEdit();">수정</a>
-				<a href="javascript:;" class="btn" onclick="goDelete();">삭제</a>
+				<a href="edit.do?notice_no=${vo.notice_no }" class="btn">수정</a>
+				<a href="javascript:;" class="btn" onclick="del();">삭제</a>
 			</div>
 		</div>
 		<div style="height:300px;"></div>

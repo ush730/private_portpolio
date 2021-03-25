@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<sql id="boardWhere">
+		<where> <!-- 아래 조건이 있으면 where 붙임 -->
+			<if test="searchWord != null and searchType == 1"> 
+			and (board_title like '%${searchWord}%')
+			</if>
+			<if test="searchWord != null and searchType == 2"> 
+			and (board_content like '%${searchWord}%')
+			</if>
+			<if test="searchWord != null and searchType == 3"> 
+			and (board_title like '%${searchWord}%' or board_content like '%${searchWord}%')
+			</if>
+			<if test="searchWord != null and searchType == 4"> 
+			and (user_no IN (SELECT user_no FROM user WHERE user_id LIKE '%${searchWord}%'))
+			</if>			
+			<if test="user_no != 0">
+			and user_no=#{user_no}
+			</if>
+		</where>
+	</sql>
+
+		<select id="selectList" parameterType="board.BoardVo" resultType="board.BoardVo">
+		select *,
+			(select count(*) from comment where board_no=board.board_no) as commentCount,
+			ifnull((select user_name from user where user_no=board.user_no),'관리자') as username
+		 from board
+		<include refid="boardWhere"/>
+		ORDER BY ${orderby} ${direct}
+		limit ${startIdx}, ${pageRow}
+	</select>
+	
+	<select id="count" parameterType="board.BoardVo" resultType="int">
+		select count(*) as cnt from board	
+		<include refid="boardWhere"/>	
+	</select>
+	
+	
+	<select id="selectOne" parameterType="board.BoardVo" resultType="board.BoardVo">
+		select *,
+		ifnull((select user_id from user where user_no=board.user_no),'관리자') as username
+		 from board where board_no=${board_no }
+	</select>
+	
+	<insert id="insertBoard" parameterType="board.BoardVo">
+		INSERT INTO board (
+			user_no, board_regdate, board_title, board_content, filename, filename_org
+		) VALUES (		
+			#{user_no},			
+			NOW(),
+			#{board_title},
+			#{board_content},
+			#{filename},
+			#{filename_org}
+		)
+	</insert>
+	
+	<update id="updateBoard" parameterType="board.BoardVo">
+		UPDATE board SET
+			board_title = #{board_title}
+			, board_content = #{board_content}
+			<if test="filename != null">
+			, filename=#{filename}
+			, filename_org=#{filename_org}
+			</if>
+		WHERE
+			board_no = #{board_no}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="board.BoardVo">
+		DELETE FROM board WHERE board_no = #{board_no}
+	</delete>
+	
+	<update id="updateReadCnt" parameterType="int">
+		UPDATE board SET
+			readCnt = readCnt + 1
+		WHERE
+			board_no = #{board_no}
+	</update>
+	
+	
+	
+</mapper>

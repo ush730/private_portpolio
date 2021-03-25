@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page import="util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -301,10 +302,18 @@ function test() {
 <body>
 <div id="wrap">
 	<div id="header">
-		<h1><a href="<%=util.Property.contextPath%>/index.do">개인 포트폴리오</a><a href="javascript:;" onclick="test()">&nbsp;&nbsp;&nbsp;</a></h1>
+		<h1><a href="<%=util.Property.contextPath%>/index.do">유승현의 포트폴리오</a><a href="javascript:;" onclick="test()">&nbsp;&nbsp;&nbsp;</a></h1>
 		<ul class="topmenu">
 			<li class="logout"></li>
-			<li class="homepage"><a href="http://gdu.co.kr" target="_blank">팀프로젝트</a></li>
+			<c:if test="${empty authUser}">
+			<li class="homepage">
+			<a href="/pp/portfolio/user/login.do">로그인&nbsp;&nbsp;</a></li>
+			 <a href="/pp/portfolio/user/write.do">회원가입</a>
+			 </c:if>
+			  <c:if test="${!empty authUser}">     
+                <a href="/pp/portfolio/user/logout.do">로그아웃&nbsp;&nbsp;</a>
+                <a href="/pp/portfolio/user//detail.do?user_no=${authUser.user_no }">내 정보</a>
+			</c:if>
 		</ul>
 	</div>
 	<!--//header-->
@@ -347,11 +356,10 @@ function test() {
 						<dt><a href="javascript:;">개인 프로젝트</a></dt>
 						<dd class="frist"><a href="javascript:;" onclick="clickMenu('portfolio1', '공지사항', '/portfolio/notice/index.do', false)">공지사항</a></dd>
 						<dd><a href="javascript:;" onclick="clickMenu('portfolio2', '갤러리', '/portfolio/gallery/index.do', false)">갤러리</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio3', 'Q&A', '/portfolio/qna/index.do', false)">Q&A</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio4', '답변게시판', '/portfolio/reply/index.do', false)">답변게시판</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio5', '댓글게시판', '/portfolio/comment/index.do', false)">댓글게시판</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/member/index.do', false)">회원관리</a></dd>
-						<dd><a href="javascript:;" onclick="clickMenu('portfolio7', '전처리시각화실습', '/portfolio/python/수학.html', false)">전처리시각화실습</a></dd>
+						<dd><a href="javascript:;" onclick="clickMenu('portfolio3', '답변게시판', '/portfolio/reply/index.do', false)">답변게시판</a></dd>
+						<dd><a href="javascript:;" onclick="clickMenu('portfolio4', '댓글게시판', '/portfolio/comment/index.do', false)">댓글게시판</a></dd>
+						<dd><a href="javascript:;" onclick="clickMenu('portfolio5', '회원관리', '/portfolio/user/index.do', false)">회원관리</a></dd>
+						<dd><a href="javascript:;" onclick="clickMenu('portfolio6', '전처리시각화실습', '/portfolio/python/수학.html', false)">전처리시각화실습</a></dd>
 						
 					</dl>
 					
@@ -411,11 +419,10 @@ function test() {
 						<ul>	
 							<li id="portfolio1_submenu" onclick="clickMenu('portfolio1', '공지사항', '/portfolio/notice/index.do', false)">공지사항</li>
 							<li id="portfolio2_submenu" onclick="clickMenu('portfolio2', '갤러리', '/portfolio/gallery/index.do', false)">갤러리</li>
-							<li id="portfolio3_submenu" onclick="clickMenu('portfolio3', 'Q&A', '/portfolio/qna/index.do', false)">Q&A</li>
-							<li id="portfolio4_submenu" onclick="clickMenu('portfolio4', '답변게시판', '/portfolio/reply/index.do', false)">답변게시판</li>
-							<li id="portfolio5_submenu" onclick="clickMenu('portfolio5', '댓글게시판', '/portfolio/comment/index.do', false)">댓글게시판</li>
-							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '회원관리', '/portfolio/user/index.do', false)">회원관리</li>
-							<li id="portfolio7_submenu" onclick="clickMenu('portfolio7', '전처리시각화실습', '/python/math.html', false)">전처리시각화실습</a></dd>
+							<li id="portfolio3_submenu" onclick="clickMenu('portfolio3', '답변게시판', '/portfolio/reply/index.do', false)">답변게시판</li>
+							<li id="portfolio4_submenu" onclick="clickMenu('portfolio4', '자유게시판', '/portfolio/board/index.do', false)">자유게시판</li>
+							<li id="portfolio5_submenu" onclick="clickMenu('portfolio5', '회원관리', '/portfolio/user/index.do', false)">회원관리</li>
+							<li id="portfolio6_submenu" onclick="clickMenu('portfolio6', '전처리시각화실습', '/python/math.html', false)">전처리시각화실습</a></dd>
 						</ul>
 					</dd>
 				</dl>

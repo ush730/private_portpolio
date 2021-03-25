@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+	
+	<sql id="select_section">
+		<where> <!-- 아래 조건이 있으면 where 붙임 -->
+			<!-- 이름이나 아이디 검색 -->
+			<if test="searchWord != null and searchWord != ''"> <!-- where 다음에 and가 오면 자동으로 제거 -->
+				and (rep_title like '%${searchWord}%')
+			</if>
+			<!-- 가입일 검색(기간 검색) 시작일 sdate, 종료일 edate -->
+			<if test="rep_section != null and rep_section != '' ">				
+				and rep_section = ${rep_section}
+				
+			</if>
+		</where>
+	</sql>
+	
+	<select id="count" parameterType="reply.ReplyVo" resultType="int">
+		select count(*) as cnt from reply
+	</select>
+	
+	<select id="selectList" parameterType="reply.ReplyVo" resultType="reply.ReplyVo">
+		select *,			
+			ifnull((select user_id from user where user_no=reply.user_no),'MANAGER') as user_name
+		from reply
+		<include refid="select_section"/>
+		ORDER BY ref DESC, seq ASC
+		limit ${startIdx}, ${pageRow}
+	</select>
+	
+	
+	<select id="selectOne" parameterType="reply.ReplyVo" resultType="reply.ReplyVo">
+		select *, 
+		ifnull((select user_id from user where user_no=reply.user_no),'관리자') as user_name
+		from reply where rep_no=#{rep_no}
+	</select>
+	
+	<insert id="insert" parameterType="reply.ReplyVo" useGeneratedKeys="true">
+		INSERT INTO reply (
+			user_no, rep_title, rep_content, rep_regdate
+		) VALUES (
+			#{user_no},
+			#{rep_title},
+			#{rep_content},
+			NOW()			
+		)
+		<selectKey keyProperty="rep_no" resultType="int" order="AFTER"> 
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertReply" parameterType="reply.ReplyVo">
+		INSERT INTO reply (
+			user_no, rep_title, rep_content, rep_regdate, ref, seq, lev
+		) VALUES (
+			0,
+			#{rep_title},
+			#{rep_content},
+			NOW(),
+			#{ref},
+			#{seq},
+			#{lev}
+		)
+	</insert>
+	
+	<update id='refUpdate' parameterType="int">
+		UPDATE reply SET ref = #{ref} WHERE rep_no = #{ref} 
+	</update>
+	
+	<update id="update" parameterType="reply.ReplyVo">
+		UPDATE reply SET
+			rep_title = #{rep_title}
+			, rep_content = #{rep_content}
+			
+		WHERE
+			rep_no = #{rep_no}
+	</update>
+	
+	<delete id="delete" parameterType="reply.ReplyVo">
+		DELETE FROM reply WHERE rep_no = #{rep_no}
+	</delete>
+	
+	<update id="updateSeq" parameterType="java.util.Map">
+		UPDATE reply SET seq=seq+1 WHERE ref=#{ref} AND seq > #{seq}
+	</update>
+	   
+	
+</mapper>

@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public class UserDao {
 
@@ -27,8 +26,8 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectOne", vo);
 	}
 	
-	public int isDuplicateId(String cst_id) {
-		return sqlSession.selectOne("user.isDuplicateId", cst_id);
+	public int isDuplicateId(String user_id) {
+		return sqlSession.selectOne("user.isDuplicateId", user_id);
 	}
 	
 	public int insert(UserVo vo) {

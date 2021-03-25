@@ -78,10 +78,7 @@ function goSave() {
 		$("#user_tel").focus();
 		return false;
 	}
-	if(!$(':input:radio[id=user_gender]:checked').val()) {   
-		   alert("성별을 선택해 주세요.");
-		   return;
-		}
+
 	if ($("#user_birth").val().trim() == '') {
 		alert('생일을 입력해 주세요');
 		$("#user_birth").focus();
@@ -92,6 +89,10 @@ function goSave() {
 		$("#user_birth").focus();
 		return false;
 	}
+	if(!$(':input:radio[id=user_gender]:checked').val()) {   
+		   alert("성별을 선택해 주세요.");
+		   return;
+		}	
 	if ($("#zipcode").val().trim() == '') {
 		alert('우편번호를 입력해 주세요');
 		$("#zipcode").focus();
@@ -120,7 +121,7 @@ function goSave() {
 				// 모든 입력란을 초기화
 				//$("input[type='text'], input[type='password']").val("");
 				//$("#frm")[0].reset();
-				location.href="${param.url}";
+				location.href="/pp/index.do";
 			} else {
 				alert("등록 실패");
 			}
@@ -189,14 +190,13 @@ function goSave() {
 		<h2>회원가입</h2>
 	</div>
 	</div>
-	  <div class="sub">
-		<div class="size">
+	<div class="write">
 			<form action="insert.do" method="post" id="frm" name="frm"  enctype="multipart/form-data">
 			<table class="board_write">
 				<caption>회원가입</caption>
 				<colgroup>
-					<col width="20%" />
-					<col width="*" />
+					<col style="width:150px"/>
+					<col width="width:500px" />
 				</colgroup>
 				<tbody>
 					<tr>
@@ -226,14 +226,15 @@ function goSave() {
 						<th>*연락처</th>
 						<td><input type="text" name="user_tel" id="user_tel" class="wid50" maxlength="15" onkeyup="isNumberOrHyphen(this);cvtPhoneNumber(this);" style="float:left;"></td>
 					</tr>
-						<tr>
-							<th>*성별</th>
-							<td><input type="radio" name = "user_gender" value="남성" id="user_gender">남성
-							<input type="radio" name = "user_gender" value="여성" id="user_gender">여성 </td>
-						</tr>
+
 					<tr>
 						<th>*생년월일<br></th>
 						<td><input type="text" name="user_birth" id="user_birth" class="wid200" onkeyup="isNumberOrHyphen(this);cvtDateTime(this);" style="float:left;"></td>
+					</tr>
+					<tr>
+						<th>*성별</th>
+						<td><input type="radio" name = "user_gender" value="남성" id="user_gender">남성
+						<input type="radio" name = "user_gender" value="여성" id="user_gender">여성 </td>
 					</tr>
 					<tr>
 						<th>*주소</th>
@@ -252,7 +253,7 @@ function goSave() {
 					<div><a href="javascript:;" class="btn" onclick="goSave();">가입</a> <a href="javascript:;" class="btn" onclick="history.back();">취소</a></div>
 				</div>
 			</div>
-    	</div>
+ 
 
 
 

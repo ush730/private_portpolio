@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">	
+	
+	<select id="selectList" parameterType="int" resultType="board.CommentVo">
+		select *,
+		ifnull((select user_id from user where user_no=comment.user_no),'관리자') as username
+		from comment where board_no=#{board_no}		
+	</select>	
+	
+	<insert id="insert" parameterType="board.CommentVo">
+		INSERT INTO board_comment (
+			board_no,board_comment, regdate, user_no
+		) VALUES (			
+			#{board_no},
+			#{board_comment},
+			NOW(),
+			#{user_no}			
+		)
+	</insert>	
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM comment WHERE no = #{no}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

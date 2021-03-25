@@ -1,39 +1,51 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page import="user.*" %>
+<%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>개인정보</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
-
-<meta name="keywords" content="">
-<meta name="description" content="">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>pp 개인정보 수정</title>
-</head>
+<title><%=util.Property.title %></title>
+<%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
 <script>
-function edit() {
-	location.href='<%=request.getContextPath()%>/user/edit.do?user_no=${authUser.user_no }';
+function del() {
+	if (confirm('정말 탈퇴하시겠습니까?')) {
+		$.ajax({
+		url:'/pp/portfolio/user/delete.do',
+		data:{user_no:${vo.user_no}},
+		type:'HTML',
+		method:'GET',
+		cache:false,
+		async:false,
+		success:function(res) {
+		//console.log(data);
+		if (res == 'true') {
+		alert('정상적으로 탈퇴되었습니다.');
+		location.href="${param.url}";
+						
+		} else {
+		alert('탈퇴 오류');
+	}
+}
+});
+}
 }
 </script>
-
+</head>
 
 
 <body>
-
-
-	  <div class="sub">
-		<div class="size">
-			<h3 class="sub_title">내 정보</h3>
+	  <div id="boardWrap" class="bbs">
+	<div class="pageTitle">
+		<h2>회원정보</h2>
+	</div>
+	<div class="write">
 			<form action="update.do" method="post" id="frm" name="frm"  enctype="multipart/form-data">
 			<input type="hidden" name="user_no" value="${vo.user_no }">
-			<table class="board_write">
-				<caption>마이페이지</caption>
+			<table>
 				<colgroup>
-					<col width="20%" />
-					<col width="*" />
+				<col style="width:150px"/>
+				<col style="width:*"/>
 				</colgroup>
 				<tbody>
 					<tr>
@@ -52,29 +64,13 @@ function edit() {
 						<th>*연락처</th>
 						<td>${vo.user_tel }</td>
 					</tr>
-						<tr>
-							<th>*성별</th>
-							<td>${vo.user_gender}</td>
-						</tr>
+					<tr>
+						<th>*성별</th>
+						<td>${vo.user_gender}</td>
+					</tr>
 					<tr>
 						<th>*생년월일<br></th>
 						<td>${vo.user_birth }</td>
-					</tr>
-					<tr>
-						<th>*기저질환</th>
-						<td>${vo.user_disease }</td>
-					</tr>
-										<tr>
-						<th>*키(cm)</th>
-						<td>${vo.user_height }</td>
-					</tr>
-					<tr>
-						<th>*몸무게(kg)</th>
-						<td>${vo.user_weight }</td>
-					</tr>
-					<tr>
-						<th>*비만도</th>
-						<td>${vo.user_grade }</td>
 					</tr>
 					<tr>
 						<th>*주소</th>
@@ -89,13 +85,16 @@ function edit() {
 					</tbody>
 				</table>
 				</form>
-			<div class="btnSet clear">
-			<div><input type="button" class="btn" value="회원정보 수정" onclick="edit();">
+			<div class="btnSet">
+
+			<input type="button" class="btn" value="회원정보 수정" onclick='location.href="edit.do?user_no=${vo.user_no}";'>
+					<a href="javascript:del();" class="btn" id="submitBtn">회원탈퇴</a>
+			<input type="button" class="btn" value="처음으로" onclick='location.href="/pp/index.do";'>
+			</div>
+			</div>
 
 			</div>
-    	</div>
-    	</div>
-    	</div>
+
 
 
 </body>

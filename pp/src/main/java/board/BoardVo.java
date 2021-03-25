@@ -2,10 +2,12 @@ package board;
 
 import java.sql.Timestamp;
 
-public class BoardVo {
+import util.CommonVo;
+
+public class BoardVo extends CommonVo{
 	private int board_no;
 	private int user_no;
-	private String bb_notice;
+
 	private String filename; 		// 서버에 저장될 파일명
 	private String filename_org;
 	private Timestamp board_regdate;
@@ -27,12 +29,7 @@ public class BoardVo {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
-	public String getBb_notice() {
-		return bb_notice;
-	}
-	public void setBb_notice(String bb_notice) {
-		this.bb_notice = bb_notice;
-	}
+
 	public String getFilename() {
 		return filename;
 	}

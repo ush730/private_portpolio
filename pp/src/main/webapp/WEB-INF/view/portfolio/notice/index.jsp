@@ -1,10 +1,17 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="util.*" %>
+<%@ page import="user.*" %>
+<%@ page import="java.util.*" %>
 <!doctype html>
 <html lang="ko">
 <head>
 <title><%=util.Property.title %></title>
 <%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
 <script>
+function goSearch() {
+	$("#searchForm").submit();
+}
 </script>
 </head>
 <body>
@@ -28,38 +35,52 @@
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
-						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td colspan="5">등록된 데이터가 없습니다.</td>
-					</tr>
-				<%
-						String targetUrl = "";
-						for (int i=0; i<10; i++) {
-							targetUrl = "style='cursor:pointer;' onclick=\"location.href='view.do?idx="+i+"'\"";
-				%>
-					<tr <%=targetUrl%>>
-						<td><%=10-i%></td>
-						<td class="title">공지사항 제목입니다.</td>
-						<td>관리자</td>
-						<td>2020-01-01</td>
-						<td>111</td>
-					</tr>
-				<%
-						}
-				%>
+				<c:forEach var="vo" items="${list}">							
+					<tr style='cursor:pointer;' onclick="location.href='detail.do?board_no=${vo.notice_no }'">
+						<td class="first"><input type="checkbox" name="nos" id="no" value="${vo.notice_no }"/></td>
+						<td>${vo.notice_no }</td>
+						<td class="txt_l">${vo.notice_title}</td>
+	
+						<td class="date">${vo.notice_regdate }</td>
+						<td class="hit" >${vo.readCnt }</td>
+					</tr>						
+				</c:forEach>					
 				</tbody>
 			</table>
-		<div class="pagenate clear">
-			<ul class='page'>
-				<li><a href='javascript:;' class='current'>1</a></li>
-				<li><a href='/portfolio/notice/index.do?reqPageNo=2'>2</a></li>
-				<li><a href='/portfolio/notice/index.do?reqPageNo=3'>3</a></li>
-			</ul> 
+			<div class="pagenate clear">								
+				<c:if test="${startPage > 10}">
+					<a href="index.do?reqPage=${startPage-1 }&searchWord=${param.searchWord}">[이전]</a>
+				</c:if>
+				<c:forEach var="rp" begin="${startPage }" end="${endPage }">
+					<a href="index.do?reqPage=${rp }&searchWord=${param.searchWord}">[${rp }]</a>
+				</c:forEach>
+				<c:if test="${totalPage > endPage }">
+					<a href="index.do?reqPage=${endPage+1 }&searchWord=${param.searchWord}">[다음]</a>
+				</c:if>
+			</div>
+						<div class="bbsSearch">
+				<form method="get" name="searchForm" id="searchForm" action="index.do">
+					<span class="srchSelect">
+						<select name="searchType">
+							<option value="" <c:if test="${param.searchType == 0 }">selected</c:if>>전체</option>
+							<option value="1" <c:if test="${param.searchType == 1 }">selected</c:if>>제목만</option>
+							<option value="2" <c:if test="${param.searchType == 2 }">selected</c:if>>내용만</option>
+							<option value="3" <c:if test="${param.searchType == 3 }">selected</c:if>>제목 + 내용</option>
+							<option value="4" <c:if test="${param.searchType == 4 }">selected</c:if>>작성자</option>
+						</select>
+					</span>
+					<span class="searchWord">							
+						<input type="text" name="searchWord" value="${param.searchWord }">
+						<input type="button" id="" value="검색" title="검색" onclick="goSearch();">
+					</span>
+					
+				</form>					
+			</div>		
 		</div>
 		<div class="btnSet">
 			<div class="right">
@@ -68,7 +89,7 @@
 		</div>
 	</div>
 	<!--//list-->
-</div>
+
 <!--//boardWrap-->
 </body>
 </html>

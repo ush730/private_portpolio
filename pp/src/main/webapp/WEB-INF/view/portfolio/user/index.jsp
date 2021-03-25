@@ -51,7 +51,7 @@ function getOrderby() {
 function moveWrite() {
 	location.href='write.do';	
 }
-	
+
 </script>
 </head>
 <body>
@@ -94,7 +94,7 @@ function moveWrite() {
 	<tr>
 		<td>${vo.user_no }</td>
 		<td>${vo.user_name }</td>
-		<td><a href="detail.do?no=${vo.user_no }">${vo.user_id }</a></td>
+		<td><a href="/pp/portfolio/user/detail.do?user_no=${vo.user_no }">${vo.user_id }</a></td>
 		<td>${vo.user_tel }</td>
 		<td>${vo.user_regdate }</td>
 	</tr>
@@ -123,12 +123,8 @@ function moveWrite() {
 <c:if test="${totalPage > endPage }">
 <a href="index.do?reqPage=${endPage+1 }&sdate=${param.sdate}&edate=${param.edate}&searchWord=${param.searchWord}&orderby=${vo.orderby}&direct=${vo.direct}">[다음]</a>
 </c:if>
-<div class="btnSet">
-	<div class="right">
-<a href="javascript:moveWrite();"><input type="button" value="회원가입"></a>
 </div>
-</div>
-</div>
+
 </body>
 </html>
 

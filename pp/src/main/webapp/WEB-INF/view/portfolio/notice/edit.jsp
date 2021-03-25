@@ -5,9 +5,26 @@
 <title><%=util.Property.title %></title>
 <%@ include file="/WEB-INF/view//include/headHtml.jsp" %>
 <script>
-var oEditors; // 에디터 객체 담을 곳
-$(document).ready(function(e){
-	oEditors = setEditor("<%=request.getContextPath()%>", "contents"); // 에디터 셋팅
+var oEditors = [];
+$(function() {
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "contents", // textarea ID
+		sSkinURI: "<%=request.getContextPath()%>/smarteditor/SmartEditor2Skin.html",	
+		htParams : {
+			bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+			bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+			bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+			fOnBeforeUnload : function(){
+				
+			}
+		}, //boolean
+		fOnAppLoad : function(){
+			//예제 코드
+			//oEditors.getById["contents"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+		},
+		fCreator: "createSEditor2"
+	});
 });
 
 function goSave() {
@@ -48,13 +65,13 @@ function goSave() {
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" id="title" name="title" value="공지사항 제목입니다." />
+						<input type="text" id="title" name="title" value="공지사항 제목입니다."  title="제목을 입력해주세요" value=${vo.notice_title } />
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea id="contents" name="contents" rows="25">내용입니다...</textarea>
+						<textarea id="contents" name="contents" rows="25">${vo.notice_contents }</textarea>
 					</td>
 				</tr>
 				<tr>
