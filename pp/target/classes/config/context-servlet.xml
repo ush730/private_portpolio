@@ -7,6 +7,7 @@
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<context:component-scan base-package="admin" />
 	<context:component-scan base-package="test" />
 	<context:component-scan base-package="main" />
 	<context:component-scan base-package="user" />
@@ -14,6 +15,7 @@
 	<context:component-scan base-package="notice" />
 	<context:component-scan base-package="reply" />
 	<context:component-scan base-package="gallery" />
+	
 	
 	<mvc:annotation-driven/> <!-- annotation 활성화 -->
  	<mvc:default-servlet-handler/>
@@ -75,7 +77,17 @@
 			<mvc:exclude-mapping path="/portfolio/notice/detail.do"/>
 			<bean class="interceptor.UserInterceptor"/>
 		</mvc:interceptor>
+		
+	<mvc:interceptor>      
+     	 <mvc:mapping path="/admin/**"/>     	 
+         <mvc:exclude-mapping path="/admin/index.do"/>                  
+         <bean class="interceptor.AdminInterceptor"/>
+      </mvc:interceptor>   
 	</mvc:interceptors>
 	
+	   <!-- 사용자 정적페이지 -->
+	   
+	<mvc:view-controller path="/index.do"/>
+	<mvc:view-controller path="/admin/index.do"/>
 
 </beans>

@@ -60,7 +60,7 @@ public class NoticeController {
 		out.print("<script>");
 		if (noticeService.insert(vo)) {
 			out.print("alert('정상적으로 등록되었습니다.');");
-			out.print("location.href='/dtoi/portfolio/notice/index.do';");
+			out.print("location.href='/pp/portfolio/notice/index.do';");
 		} else {
 			out.print("alert('등록실패.');");
 			out.print("history.back();");

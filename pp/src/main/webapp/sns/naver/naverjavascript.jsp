@@ -5,7 +5,7 @@
 <%@ page import="java.net.URLEncoder"  %>
 <%
 String client_id = "uWCnorqY_RmfpwdmwSj_";
-String redirectURI = URLEncoder.encode("http://localhost:8080/dtoi/sns/naver/naverCallback.jsp");
+String redirectURI = URLEncoder.encode("http://localhost:8080/pp/sns/naver/naverCallback.jsp");
 SecureRandom random = new SecureRandom();
 String state = new BigInteger(130, random).toString(32);
 session.setAttribute("state", state);

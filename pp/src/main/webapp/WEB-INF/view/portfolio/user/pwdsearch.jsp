@@ -15,7 +15,7 @@ UserVo data = (UserVo)request.getAttribute("data");
 <meta name="format-detection" content="telephone=no, address=no, email=no">
 <meta name="keywords" content="">
 <meta name="description" content="">
-<title>DTOI</title>
+<title>PP</title>
 
 </head>
 <script>

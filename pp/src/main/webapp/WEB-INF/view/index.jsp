@@ -308,7 +308,8 @@ function test() {
 			<c:if test="${empty authUser}">
 			<li class="homepage">
 			<a href="/pp/portfolio/user/login.do">로그인&nbsp;&nbsp;</a></li>
-			 <a href="/pp/portfolio/user/write.do">회원가입</a>
+			 <a href="/pp/portfolio/user/write.do">회원가입&nbsp;&nbsp;</a>
+			 <a href="/pp/portfolio/admin/admin/index.do">관리자페이지</a>
 			 </c:if>
 			  <c:if test="${!empty authUser}">     
                 <a href="/pp/portfolio/user/logout.do">로그아웃&nbsp;&nbsp;</a>
